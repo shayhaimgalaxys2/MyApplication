@@ -2,23 +2,24 @@ package com.shayhaim.myapplication.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import com.shayhaim.myapplication.Deal;
+import com.shayhaim.myapplication.data_objects.Deal;
 import com.shayhaim.myapplication.R;
 import com.shayhaim.myapplication.adapters.DealsListAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    boolean doubleBackToExitPressedOnce = false;
     private ListView dealsLv;
 
     @Override
@@ -103,6 +104,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStop() {
         super.onStop();
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, getString(R.string.press_twice_to_exit), Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
 
 
     }
